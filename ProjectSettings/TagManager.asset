@@ -3,15 +3,20 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Ground
+  - Enemy
+  - Platform
+  - Fire
+  - Spring
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Ignore Player
   - Water
   - UI
-  - 
+  - Player
   - 
   - 
   - 
