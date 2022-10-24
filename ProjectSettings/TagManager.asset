@@ -9,6 +9,8 @@ TagManager:
   - Platform
   - Fire
   - Spring
+  - Ladder
+  - MovingPlatform
   layers:
   - Default
   - TransparentFX

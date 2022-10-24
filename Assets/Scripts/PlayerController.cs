@@ -11,6 +11,7 @@ public class PlayerController : MonoBehaviour
     private float jumpForce = 30f;
     public bool isGrounded = false;
     public bool doubleJump = false;
+    public bool inLadder = false;
 
     [Header("Components")]
     public Rigidbody2D rb;
@@ -41,6 +42,12 @@ public class PlayerController : MonoBehaviour
     {
         float inputX = Input.GetAxis("Horizontal");
         rb.AddForce(new Vector2(inputX * speed, 0));
+
+        if(inLadder)
+        {
+            float inputY = Input.GetAxis("Vertical");
+            rb.AddForce(new Vector2(0, inputY * speed));
+        }
 
         //Flip player 
         if (inputX > 0)
@@ -82,20 +89,38 @@ public class PlayerController : MonoBehaviour
     }
 
     // Trigger and Collision detection
-    
+
     private void OnTriggerStay2D(Collider2D collision)
     {
-       if(collision.CompareTag("Ground") || collision.CompareTag("Platform"))
+       if(collision.CompareTag("Ground") || collision.CompareTag("Platform") || collision.CompareTag("MovingPlatform"))
        {
             isGrounded = true;
             doubleJump = true;
        }
+
+       if (collision.CompareTag("MovingPlatform"))
+        {
+            gameObject.transform.SetParent(collision.transform);
+        }
+
+       if(collision.CompareTag("Ladder"))
+        {
+            inLadder = true;
+        }
     }
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.CompareTag("Ground") || collision.CompareTag("Platform"))
+        if (collision.CompareTag("Ground") || collision.CompareTag("Platform") || collision.CompareTag("MovingPlatform"))
         {
             isGrounded = false;
+        }
+        if (collision.CompareTag("MovingPlatform"))
+        {
+            gameObject.transform.SetParent(null);
+        }
+        if (collision.CompareTag("Ladder"))
+        {
+            inLadder = false;
         }
     }
 
