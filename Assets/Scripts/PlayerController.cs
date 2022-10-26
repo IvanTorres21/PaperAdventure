@@ -7,7 +7,7 @@ using UnityEngine.SocialPlatforms.Impl;
 public class PlayerController : MonoBehaviour
 {
     [Header("Movement")]
-    private float speed = 8f;
+    private float speed = 18f;
     private float jumpForce = 30f;
     public bool isGrounded = false;
     public bool doubleJump = false;
@@ -98,11 +98,6 @@ public class PlayerController : MonoBehaviour
             doubleJump = true;
        }
 
-       if (collision.CompareTag("MovingPlatform"))
-        {
-            gameObject.transform.SetParent(collision.transform);
-        }
-
        if(collision.CompareTag("Ladder"))
         {
             inLadder = true;
@@ -114,10 +109,7 @@ public class PlayerController : MonoBehaviour
         {
             isGrounded = false;
         }
-        if (collision.CompareTag("MovingPlatform"))
-        {
-            gameObject.transform.SetParent(null);
-        }
+
         if (collision.CompareTag("Ladder"))
         {
             inLadder = false;
