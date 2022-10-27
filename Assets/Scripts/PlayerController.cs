@@ -7,7 +7,7 @@ using UnityEngine.SocialPlatforms.Impl;
 public class PlayerController : MonoBehaviour
 {
     [Header("Movement")]
-    private float speed = 18f;
+    private float speed = 10f;
     private float jumpForce = 30f;
     public bool isGrounded = false;
     public bool doubleJump = false;
@@ -41,12 +41,12 @@ public class PlayerController : MonoBehaviour
     private void MovePlayer()
     {
         float inputX = Input.GetAxis("Horizontal");
-        rb.AddForce(new Vector2(inputX * speed, 0));
+        rb.velocity = new Vector2(inputX * speed, rb.velocity.y);
 
         if(inLadder)
         {
             float inputY = Input.GetAxis("Vertical");
-            rb.AddForce(new Vector2(0, inputY * speed));
+            rb.velocity = (new Vector2(rb.velocity.x, inputY * speed));
         }
 
         //Flip player 
