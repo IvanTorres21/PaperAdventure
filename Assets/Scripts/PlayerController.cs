@@ -8,7 +8,7 @@ public class PlayerController : MonoBehaviour
 {
     [Header("Movement")]
     private float speed = 10f;
-    private float jumpForce = 30f;
+    private float jumpForce = 45f;
     public bool isGrounded = false;
     public bool doubleJump = false;
     public bool inLadder = false;
@@ -67,7 +67,14 @@ public class PlayerController : MonoBehaviour
             doubleJump = false;
         }
 
-
+        // Increase falling speed without having to worry about it changing the jump
+        if(rb.velocity.y < 0)
+        {
+            rb.gravityScale = 3;
+        } else
+        {
+            rb.gravityScale = 1;
+        }
     }
 
     /// <summary>

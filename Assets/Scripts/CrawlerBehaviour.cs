@@ -11,7 +11,7 @@ public class CrawlerBehaviour : MonoBehaviour
     [Header("Movement")]
     private float speed = 4f;
     private Rigidbody2D rb;
-    private int direction = 1; // 1 -> towards right, -1 -> towards left
+    public int direction = 1; // 1 -> towards right, -1 -> towards left
 
     [Header("Attacks")]
     private float jumpForce = 15f;
@@ -75,7 +75,7 @@ public class CrawlerBehaviour : MonoBehaviour
         {
             float distance = Mathf.Abs(hit.point.x - transform.position.x);
             Debug.Log(distance);
-            if (distance < 2f)
+            if (distance < 5f)
             {
                 if (hit.collider.CompareTag("Obstacle"))
                 {
