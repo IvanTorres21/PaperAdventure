@@ -16,7 +16,7 @@ public class PlayerController : MonoBehaviour
     [Header("Components")]
     public Rigidbody2D rb;
     private Animator animationController;
-    private SpriteRenderer sprite;
+    public SpriteRenderer sprite;
 
     [Header("Player Stats")]
     private int hp = 100;
@@ -29,10 +29,40 @@ public class PlayerController : MonoBehaviour
         animationController = transform.Find("Sprite").GetComponent<Animator>();
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         MovePlayer();
         ControlAnimations();
+    }
+
+    private void Update()
+    {
+        JumpPlayer();
+    }
+
+    private void JumpPlayer()
+    {
+        //Manages the jump mechanic
+        if (isGrounded && Input.GetKeyDown(KeyCode.Space))
+        {
+            rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
+        }
+
+        if ((!isGrounded && doubleJump) && Input.GetKeyDown(KeyCode.Space))
+        {
+            rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
+            doubleJump = false;
+        }
+
+        // Increase falling speed without having to worry about it changing the jump
+        if (rb.velocity.y < 0)
+        {
+            rb.gravityScale = 3;
+        }
+        else
+        {
+            rb.gravityScale = 1;
+        }
     }
 
     /// <summary>
@@ -55,26 +85,7 @@ public class PlayerController : MonoBehaviour
         else if (inputX < 0)
             sprite.flipX = true;
 
-        //Manages the jump mechanic
-        if (isGrounded && Input.GetKeyDown(KeyCode.Space))
-        {
-            rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
-        }
-
-        if ((!isGrounded && doubleJump) && Input.GetKeyDown(KeyCode.Space))
-        {
-            rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
-            doubleJump = false;
-        }
-
-        // Increase falling speed without having to worry about it changing the jump
-        if(rb.velocity.y < 0)
-        {
-            rb.gravityScale = 3;
-        } else
-        {
-            rb.gravityScale = 1;
-        }
+       
     }
 
     /// <summary>

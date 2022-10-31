@@ -12,6 +12,7 @@ TagManager:
   - Ladder
   - MovingPlatform
   - Obstacle
+  - Spike
   layers:
   - Default
   - TransparentFX

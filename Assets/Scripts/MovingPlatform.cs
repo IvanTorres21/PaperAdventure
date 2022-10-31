@@ -18,7 +18,7 @@ public class MovingPlatform : MonoBehaviour
         else endPos = new Vector3(startPos.x, endPos.y, startPos.z);
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         movePlatform();
     }

@@ -40,27 +40,30 @@ public class CrawlerBehaviour : MonoBehaviour
 
         if(hitR.collider != null)
         {
-            float distance = Mathf.Abs(hitR.point.x - transform.position.x);
-            if (distance < attackDistance)
+            if(hitR.collider.CompareTag("Player"))
             {
-                if (hitR.collider.CompareTag("Player"))
+                float distance = Mathf.Abs(hitR.point.x - transform.position.x);
+                if (distance < attackDistance)
                 {
                     Debug.Log("Hit player");
                     attacking = true;
                     StartCoroutine(AttackPlayer(1));
                 }
             }
+            
         }
+        
         if (hitL.collider != null)
         {
-            float distance = Mathf.Abs(hitL.point.x - transform.position.x);
-            if (distance < attackDistance)
+            if (hitL.collider.CompareTag("Player"))
             {
-                if (hitL.collider.CompareTag("Player"))
+                float distance = Mathf.Abs(hitL.point.x - transform.position.x);
+                if (distance < attackDistance)
                 {
                     Debug.Log("Hit player");
                     attacking = true;
                     StartCoroutine(AttackPlayer(-1));
+
                 }
             }
         }
@@ -73,16 +76,16 @@ public class CrawlerBehaviour : MonoBehaviour
         
         if (hit.collider != null)
         {
-            float distance = Mathf.Abs(hit.point.x - transform.position.x);
-            Debug.Log(distance);
-            if (distance < 5f)
-            {
-                if (hit.collider.CompareTag("Obstacle"))
+            //if(hit.collider.CompareTag("Obstacle"))
+            //{
+                float distance = Mathf.Abs(hit.point.x - transform.position.x);
+                Debug.Log(distance);
+                if (distance <= 5f)
                 {
                     Debug.Log("Hit wall");
                     direction = direction * -1;
                 }
-            }           
+            //}        
         }
 
         rb.AddForce(new Vector2(speed * direction, 0));
