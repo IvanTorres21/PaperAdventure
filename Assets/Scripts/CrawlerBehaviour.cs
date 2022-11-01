@@ -23,14 +23,17 @@ public class CrawlerBehaviour : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
     }
 
+    private void FixedUpdate()
+    {
+        if(!attacking)
+            WanderAround();
+
+    }
+
     private void Update()
     {
         if(!attacking)
-        {
-            WanderAround();
             CheckAttack();
-        }
-
     }
 
     private void CheckAttack()
@@ -40,31 +43,26 @@ public class CrawlerBehaviour : MonoBehaviour
 
         if(hitR.collider != null)
         {
-            if(hitR.collider.CompareTag("Player"))
+            float distance = Mathf.Abs(hitR.point.x - transform.position.x);
+            if (distance < attackDistance)
             {
-                float distance = Mathf.Abs(hitR.point.x - transform.position.x);
-                if (distance < attackDistance)
-                {
-                    Debug.Log("Hit player");
-                    attacking = true;
-                    StartCoroutine(AttackPlayer(1));
-                }
+                Debug.Log("Hit player");
+                attacking = true;
+                StartCoroutine(AttackPlayer(1));
             }
+            
             
         }
         
         if (hitL.collider != null)
         {
-            if (hitL.collider.CompareTag("Player"))
+            float distance = Mathf.Abs(hitL.point.x - transform.position.x);
+            if (distance < attackDistance)
             {
-                float distance = Mathf.Abs(hitL.point.x - transform.position.x);
-                if (distance < attackDistance)
-                {
-                    Debug.Log("Hit player");
-                    attacking = true;
-                    StartCoroutine(AttackPlayer(-1));
+                Debug.Log("Hit player");
+                attacking = true;
+                StartCoroutine(AttackPlayer(-1));
 
-                }
             }
         }
     }
@@ -88,11 +86,7 @@ public class CrawlerBehaviour : MonoBehaviour
             //}        
         }
 
-        rb.AddForce(new Vector2(speed * direction, 0));
-        if(Mathf.Abs(rb.velocity.x) >= 5f)
-        {
-            rb.velocity = new Vector2(direction * 5f, rb.velocity.y);
-        }
+        rb.velocity = new Vector2(direction * 5f, rb.velocity.y);
     }
 
     IEnumerator AttackPlayer(int attackDirection)

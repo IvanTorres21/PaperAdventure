@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1896477615991746993}
   - component: {fileID: 1896477615991746992}
-  m_Layer: 3
+  m_Layer: 7
   m_Name: sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -96,7 +96,7 @@ GameObject:
   - component: {fileID: 1896477617981867272}
   - component: {fileID: 1896477617981867273}
   - component: {fileID: 1896477617981867278}
-  m_Layer: 3
+  m_Layer: 7
   m_Name: CrawlerSmaller
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -180,4 +180,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4888c44887dc6b84c8d9c85452cb7b5c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  direction: 1
   attackDistance: 5

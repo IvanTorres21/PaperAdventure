@@ -19,8 +19,9 @@ public class PlayerController : MonoBehaviour
     public SpriteRenderer sprite;
 
     [Header("Player Stats")]
-    private int hp = 100;
-    private int score = 0;
+    public int hp = 100;
+    public int score = 0;
+    private bool gotHit = false;
 
     private void Start()
     {
@@ -103,14 +104,39 @@ public class PlayerController : MonoBehaviour
     }
     public void GetHit(int damage)
     {
-        
+        if(!gotHit)
+        {
+            hp -= damage;
+            StartCoroutine(tookDamageRoutine());
+            if (hp == 0)
+            {
+                //TODO: Lose condition;
+            }
+        }
+    }
+
+    IEnumerator tookDamageRoutine()
+    {
+        sprite.color = Color.red;
+        gotHit = true;
+        yield return new WaitForSeconds(0.8f);
+        gotHit = false;
+        sprite.color = Color.white;
     }
 
     // Trigger and Collision detection
 
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Spike"))
+        {
+            GetHit(15);
+        }
+    }
+
     private void OnTriggerStay2D(Collider2D collision)
     {
-       if(collision.CompareTag("Ground") || collision.CompareTag("Platform") || collision.CompareTag("MovingPlatform"))
+       if(collision.CompareTag("Ground") || collision.CompareTag("Platform") || collision.CompareTag("MovingPlatform") || collision.CompareTag("Spring"))
        {
             isGrounded = true;
             doubleJump = true;
@@ -123,7 +149,7 @@ public class PlayerController : MonoBehaviour
     }
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.CompareTag("Ground") || collision.CompareTag("Platform") || collision.CompareTag("MovingPlatform"))
+        if (collision.CompareTag("Ground") || collision.CompareTag("Platform") || collision.CompareTag("MovingPlatform") || collision.CompareTag("Spring"))
         {
             isGrounded = false;
         }

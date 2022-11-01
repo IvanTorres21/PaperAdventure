@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 6066037208234514130}
   - component: {fileID: 6066037208234514131}
   - component: {fileID: 6066037208234514124}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -84,7 +84,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 3
+  m_Mass: 4
   m_LinearDrag: 2
   m_AngularDrag: 0.05
   m_GravityScale: 1
@@ -109,6 +109,7 @@ MonoBehaviour:
   doubleJump: 0
   inLadder: 0
   rb: {fileID: 0}
+  sprite: {fileID: 0}
 --- !u!1 &6066037208725795402
 GameObject:
   m_ObjectHideFlags: 0
@@ -120,7 +121,7 @@ GameObject:
   - component: {fileID: 6066037208725795401}
   - component: {fileID: 6066037208725795407}
   - component: {fileID: 6066037208725795400}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -224,7 +225,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6066037208830340105}
   - component: {fileID: 6066037208830340104}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: GroundController
   m_TagString: Untagged
   m_Icon: {fileID: 0}

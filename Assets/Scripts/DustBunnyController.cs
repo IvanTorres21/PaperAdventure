@@ -5,11 +5,9 @@ using UnityEngine;
 public class DustBunnyController : MonoBehaviour
 {
     [Header("Movement")]
-    private float speed = 4f;
-    private float jumpForce = 12f;
+    private float speed = 6f;
     private bool movingForward = true;
     private int direction = 1;
-    private bool isGrounded = false;
     private bool facingRight = true;
     public Vector2 startPos;
     public Vector2 endPos;
@@ -34,7 +32,7 @@ public class DustBunnyController : MonoBehaviour
         }
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         MoveBunny();
     }
@@ -64,32 +62,12 @@ public class DustBunnyController : MonoBehaviour
        
     }
 
-    public void Attack()
-    {
-        if(isGrounded)
-        {
-            rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
-        }
-    }
-
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if(collision.CompareTag("Player"))
         {
             collision.gameObject.GetComponent<PlayerController>().GetHit(damage);
         }
-
-        if (collision.CompareTag("Ground") || collision.CompareTag("Platform"))
-        {
-            isGrounded = true;
-        }
     }
 
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        if (collision.CompareTag("Ground") || collision.CompareTag("Platform"))
-        {
-            isGrounded = false;
-        }
-    }
 }

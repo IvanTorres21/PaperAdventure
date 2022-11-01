@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5862557574406679312}
   - component: {fileID: 5862557574406679313}
   - component: {fileID: 5862557574406679310}
-  m_Layer: 3
+  m_Layer: 7
   m_Name: CrawlerBig
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -96,6 +96,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4888c44887dc6b84c8d9c85452cb7b5c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  direction: 1
   attackDistance: 8
 --- !u!1 &5862557574929337822
 GameObject:
@@ -107,7 +108,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5862557574929337821}
   - component: {fileID: 5862557574929337820}
-  m_Layer: 3
+  m_Layer: 7
   m_Name: sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
