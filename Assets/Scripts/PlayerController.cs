@@ -7,8 +7,8 @@ using UnityEngine.SocialPlatforms.Impl;
 public class PlayerController : MonoBehaviour
 {
     [Header("Movement")]
-    private float speed = 10f;
-    private float jumpForce = 45f;
+    public float speed = 10f;
+    public float jumpForce = 45f;
     public bool isGrounded = false;
     public bool doubleJump = false;
     public bool inLadder = false;
@@ -132,6 +132,12 @@ public class PlayerController : MonoBehaviour
         {
             GetHit(15);
         }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Fire"))
+            GetHit(10);
     }
 
     private void OnTriggerStay2D(Collider2D collision)
