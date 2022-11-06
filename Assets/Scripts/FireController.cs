@@ -9,8 +9,14 @@ public class FireController : MonoBehaviour
     public GameObject[] zones;
     public GameObject[] fires;
     private bool throwFire = true;
+    public AudioSource fireAudio;
 
-    
+
+    private void Start()
+    {
+        setThrowingFire(true);
+    }
+
     public void setThrowingFire(bool state)
     {
         if(state)
@@ -24,15 +30,17 @@ public class FireController : MonoBehaviour
 
     IEnumerator ThrowFire()
     {
-        while(throwFire)
+        yield return new WaitForSeconds(0.2f);
+        while (throwFire)
         {
-            yield return new WaitForSeconds(0.8f);
+            fireAudio.Play();
+            yield return new WaitForSeconds(1f);
             int index = (int) Random.Range(0, 3);
             zones[index].SetActive(true);
-            yield return new WaitForSeconds(0.5f);
+            yield return new WaitForSeconds(1.6f);
             zones[index].SetActive(false);
             fires[index].SetActive(true);
-            yield return new WaitForSeconds(0.8f);
+            yield return new WaitForSeconds(2.5f);
             fires[index].SetActive(false);
         }
     }

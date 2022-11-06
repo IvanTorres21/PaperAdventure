@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SocialPlatforms.Impl;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
@@ -12,11 +13,14 @@ public class PlayerController : MonoBehaviour
     public bool isGrounded = false;
     public bool doubleJump = false;
     public bool inLadder = false;
+    public bool canMove = true;
 
     [Header("Components")]
     public Rigidbody2D rb;
     private Animator animationController;
     public SpriteRenderer sprite;
+    public GameObject DeadPanel;
+    public Slider sliderHP;
 
     [Header("Player Stats")]
     public int hp = 100;
@@ -32,13 +36,17 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        MovePlayer();
-        ControlAnimations();
+        if (canMove)
+        {
+            MovePlayer();
+            ControlAnimations();
+        }
     }
 
     private void Update()
     {
-        JumpPlayer();
+        if(canMove)
+            JumpPlayer();
     }
 
     private void JumpPlayer()
@@ -107,12 +115,25 @@ public class PlayerController : MonoBehaviour
         if(!gotHit)
         {
             hp -= damage;
+            sliderHP.value = hp / 100f;
             StartCoroutine(tookDamageRoutine());
-            if (hp == 0)
+            if (hp <= 0)
             {
-                //TODO: Lose condition;
+                PlayerDie();
             }
         }
+    }
+
+    public void DieWithfire(int damage)
+    {
+        hp -= damage;
+        sliderHP.value = hp / 100f;
+    }
+
+    private void PlayerDie()
+    {
+        Time.timeScale = 0;
+        DeadPanel.SetActive(true);
     }
 
     IEnumerator tookDamageRoutine()
@@ -130,19 +151,23 @@ public class PlayerController : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Spike"))
         {
-            GetHit(15);
+            GetHit(10);
         }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Fire"))
-            GetHit(10);
+            GetHit(25);
+        if(collision.CompareTag("DeathZone"))
+        {
+            GetHit(999);
+        }
     }
 
     private void OnTriggerStay2D(Collider2D collision)
     {
-       if(collision.CompareTag("Ground") || collision.CompareTag("Platform") || collision.CompareTag("MovingPlatform") || collision.CompareTag("Spring"))
+       if(collision.CompareTag("Ground") || collision.CompareTag("Platform") || collision.CompareTag("MovingPlatform") || collision.CompareTag("Spring") || collision.CompareTag("Spike"))
        {
             isGrounded = true;
             doubleJump = true;
@@ -155,7 +180,7 @@ public class PlayerController : MonoBehaviour
     }
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.CompareTag("Ground") || collision.CompareTag("Platform") || collision.CompareTag("MovingPlatform") || collision.CompareTag("Spring"))
+        if (collision.CompareTag("Ground") || collision.CompareTag("Platform") || collision.CompareTag("MovingPlatform") || collision.CompareTag("Spring") || collision.CompareTag("Spike"))
         {
             isGrounded = false;
         }

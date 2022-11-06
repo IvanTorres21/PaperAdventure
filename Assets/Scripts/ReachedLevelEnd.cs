@@ -9,6 +9,7 @@ public class ReachedLevelEnd : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        Debug.Log("ey");
         if (collision.CompareTag("Player"))
             FindObjectOfType<GameManager>().LoadScene(nextScene);
     }

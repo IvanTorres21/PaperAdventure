@@ -12,7 +12,11 @@ public class DialogeManager : MonoBehaviour
     public TextMeshProUGUI TMP_name;
     public TextMeshProUGUI TMP_sentence;
     public GameObject panel;
+    public GameObject options;
+    public GameObject FireController;
 
+    private Dialogue dialogueX;
+    
     private void Start()
     {
         sentences = new Queue<string>();
@@ -21,8 +25,14 @@ public class DialogeManager : MonoBehaviour
 
     public void StartDialogue(Dialogue dialogue)
     {
+        if(dialogueX != null && dialogueX.hasOptions)
+        {
+            options.SetActive(false);
+        }
+        if (dialogue.hasOptions)
+            FireController.SetActive(false);
         Debug.Log("Starting");
-
+        Time.timeScale = 0;
         sentences.Clear();
         names.Clear();
 
@@ -34,16 +44,17 @@ public class DialogeManager : MonoBehaviour
         {
             names.Enqueue(name);
         }
-
+        dialogueX = dialogue;
         panel.SetActive(true);
         DisplayNextSentence();
     }
 
     public void DisplayNextSentence()
     {
+        StopAllCoroutines();
         if(sentences.Count == 0)
         {
-            EndDialogue();
+            EndDialogue(dialogueX);
             return;
         }
 
@@ -60,13 +71,22 @@ public class DialogeManager : MonoBehaviour
         foreach(char letter in sentence.ToCharArray())
         {
             TMP_sentence.text += letter;
-            yield return null;
+            yield return new WaitForSecondsRealtime(0.005f);
         }
     }
 
-    private void EndDialogue()
+    private void EndDialogue(Dialogue dialogue)
     {
         panel.SetActive(false);
+        if (!dialogue.hasOptions)
+            Time.timeScale = 1;
+        else
+            options.SetActive(true);
+
+        if(dialogue.endsScene)
+        {
+            FindObjectOfType<GameManager>().LoadScene(dialogue.nextScene);
+        }
         Debug.Log("End");
     }
 }

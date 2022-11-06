@@ -13,6 +13,7 @@ TagManager:
   - MovingPlatform
   - Obstacle
   - Spike
+  - DeathZone
   layers:
   - Default
   - TransparentFX

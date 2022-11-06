@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,20 +7,22 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
+    public string nextLevelVideo;
+    public float videoLength;
+    public bool isPlayingVideo;
 
-
-    private void Awake()
+    private void Start()
     {
-        // First time
-        if (instance == null)
+        if(isPlayingVideo)
         {
-            instance = this;
-            DontDestroyOnLoad(gameObject);
+            StartCoroutine(DelayedLoadScene());
         }
-        else
-        {
-            Destroy(gameObject);
-        }
+    }
+
+    IEnumerator DelayedLoadScene()
+    {
+        yield return new WaitForSeconds(videoLength);
+        LoadScene(nextLevelVideo);
     }
 
     public void LoadScene(string sceneName)
